@@ -5,9 +5,20 @@ import { useThemeStore } from "../../store/useThemeStore";
 const ThemeBtn = () => {
   const currentTheme = useTheme();
   const { theme, setTheme } = useThemeStore();
-  console.log(currentTheme);
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (theme === "light") {
+      setTheme("dark");
+      return;
+    }
+    if (theme === "dark") {
+      setTheme("light");
+      return;
+    }
+  };
+
   return (
-    <ThemeBtnStyle>
+    <ThemeBtnStyle onClick={e => handleClick(e)}>
       <img
         src={
           theme === "light" ? currentTheme.icons.moon : currentTheme.icons.sun

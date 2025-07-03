@@ -10,7 +10,7 @@ const Header = () => {
       <HeaderInner>
         <LogoStyle to="/">Mark</LogoStyle>
         <BtnWrap>
-          <ThemeBtn></ThemeBtn>
+          <ThemeBtn />
         </BtnWrap>
       </HeaderInner>
     </HeaderWrap>
@@ -46,7 +46,7 @@ const LogoStyle = styled(Link)`
 
   &:hover {
     animation: ${shake} 0.5s ease-out forwards;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+    text-shadow: 1px 1px 10px rgba(255, 255, 255, 0.7);
   }
 `;
 
