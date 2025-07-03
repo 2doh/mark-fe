@@ -8,13 +8,13 @@ declare module "styled-components" {
       bg: string;
       text: string;
       primary: string;
+      hover: string;
     };
 
     icons: {
       moon: string;
       arrowToTop: string;
       arrowToDown: string;
-      image: string;
       menu: string;
       search: string;
       star: string;

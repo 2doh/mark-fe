@@ -31,4 +31,19 @@ const ThemeBtn = () => {
 
 export default ThemeBtn;
 
-const ThemeBtnStyle = styled.button``;
+const ThemeBtnStyle = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  img {
+    box-sizing: content-box;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    padding: 8px;
+  }
+  &:hover img {
+    filter: invert(1);
+  }
+`;
