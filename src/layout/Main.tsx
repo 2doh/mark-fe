@@ -16,6 +16,9 @@ const Main = () => {
 const ContentWrapper = styled.main`
   padding: 0 50px;
   /* min-height: 100vh; */
+  @media screen and (max-width: 499px) {
+    padding: 0 20px;
+  }
 `;
 
 export default Main;

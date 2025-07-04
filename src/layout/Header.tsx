@@ -64,7 +64,7 @@ export default Header;
 
 const HeaderWrap = styled.div`
   ${flexCenter}
-  padding: 20px 40px 60px;
+  padding: 20px 50px 60px;
   @media screen and (max-width: 499px) {
     padding: 20px 10px 60px;
   }
@@ -72,7 +72,6 @@ const HeaderWrap = styled.div`
 
 const HeaderInner = styled.div`
   width: 100%;
-  padding: 20px;
   display: flex;
   justify-content: space-between;
   min-height: 87px;
