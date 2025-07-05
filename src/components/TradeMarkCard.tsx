@@ -1,29 +1,31 @@
 import React from "react";
 import styled, { useTheme } from "styled-components";
 import { colorsTheme } from "../style/colorsTheme";
+import { TradeMark } from "../interface/tradeMarkInterface";
 
-const dummy = {
-  name: "맥북",
-  applicationNo: "402024000123",
-  applicationDate: "2024‑03‑18",
-  status: "등록",
-};
+interface Props {
+  item: TradeMark;
+}
 
-const tempArr = ["상표명", "출원번호", "출원일", "상태"];
-
-export default function TradeMarkCard() {
+export default function TradeMarkCard({ item }: Props) {
   const theme = useTheme();
+
+  const fields = [
+    ["출원번호", item.applicationNumber],
+    ["출원일", item.applicationDate],
+    ["상태", item.registerStatus],
+  ];
 
   return (
     <Card>
       <Bookmark>
         <img src={theme.icons.star} alt="bookmark icon" />
       </Bookmark>
-      <Title>{dummy.name}</Title>
-      {tempArr.map((item, index) => (
-        <Content key={index}>
+      <Title>{item.productName ? item.productName : "null"}</Title>
+      {fields.map(([item, value]) => (
+        <Content key={value}>
           <Label>{item}</Label>
-          <Value>{dummy.applicationNo}</Value>
+          <Value>{value}</Value>
         </Content>
       ))}
     </Card>
