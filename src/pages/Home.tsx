@@ -1,20 +1,26 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import z from "zod";
 import { searchKeyword } from "../apis/searchAPI";
 import SearchBar from "../components/SearchBar";
 import { TradeMark } from "../interface/tradeMarkInterface";
 import { normalizeFunc } from "../utils/normalize";
+import TradeMarkCard from "../components/TradeMarkCard";
 
 const schema = z.object({
-  keyword: z.string().min(1, "검색어를 입력해 주세요."),
+  keyword: z.string().optional(),
 });
 export type searchForm = z.infer<typeof schema>;
 
 const Home = () => {
-  const [results, setResults] = useState<TradeMark[]>([]);
+  const [products, setProducts] = useState<TradeMark[]>([]); // 전체 상품 리스트
+  const [results, setResults] = useState<TradeMark[]>([]); // 검색 결과
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keywordParam = searchParams.get("q") ?? "";
 
   const formMethod = useForm<searchForm>({
     resolver: zodResolver(schema),
@@ -22,33 +28,55 @@ const Home = () => {
   });
 
   const onSubmit = async ({ keyword }: searchForm) => {
-    const result = await searchKeyword();
-    if (result?.status !== 200) {
-      return;
-    }
-
     const kw = normalizeFunc(keyword);
-
-    const filtered = result.data.filter(item => {
+    setSearchParams({ q: kw });
+    const filtered = products.filter(item => {
       const ko = normalizeFunc(item.productName).includes(kw);
       const en = normalizeFunc(item.productNameEng).includes(kw);
       return ko || en;
     });
 
-    console.log(filtered);
     setResults(filtered);
   };
 
+  useEffect(() => {
+    const productList = async () => {
+      const result = await searchKeyword();
+      if (result?.status !== 200) {
+        return;
+      }
+      setProducts(result?.data);
+    };
+    productList();
+  }, []);
+
+  // products 목록이 준비된 뒤 q가 존재한다면 자동검색
+  useEffect(() => {
+    // 데이터 없으면 리턴
+    if (!products.length) return;
+    if (!keywordParam) {
+      setResults(products);
+      return;
+    }
+    formMethod.setValue("keyword", keywordParam);
+    onSubmit({ keyword: keywordParam });
+
+    console.log(results);
+    console.log(products);
+  }, [keywordParam, products]);
+
   return (
     <HomeWrap>
-      <HomeTop>
-        <FormProvider {...formMethod}>
-          <FormWrap onSubmit={formMethod.handleSubmit(onSubmit)}>
+      <FormProvider {...formMethod}>
+        <HomeTop>
+          <form onSubmit={formMethod.handleSubmit(onSubmit)}>
             <SearchBar />
-          </FormWrap>
-        </FormProvider>
-      </HomeTop>
-      <HomeBottom></HomeBottom>
+          </form>
+        </HomeTop>
+        <HomeBottom>
+          <TradeMarkCard />
+        </HomeBottom>
+      </FormProvider>
     </HomeWrap>
   );
 };
@@ -59,6 +87,11 @@ const HomeWrap = styled.div``;
 
 const HomeTop = styled.div``;
 
-const HomeBottom = styled.div``;
-
-const FormWrap = styled.form``;
+const HomeBottom = styled.div`
+  margin-top: 20px;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 10px;
+  width: 100%;
+`;

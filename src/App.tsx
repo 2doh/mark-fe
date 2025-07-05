@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import Main from "./layout/Main";
 import Home from "./pages/Home";
-import { ThemeProvider } from "styled-components";
 
 import { useThemeStore } from "./store/useThemeStore";
 import Globalstyle from "./style/Globalstyle";
-import { lightTheme } from "./style/theme/light";
 import { darkTheme } from "./style/theme/dark";
+import { lightTheme } from "./style/theme/light";
 
 function App() {
   const themeMode = useThemeStore(state => state.theme);

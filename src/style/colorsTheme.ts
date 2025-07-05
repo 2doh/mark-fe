@@ -3,9 +3,16 @@ export const colorsTheme = {
   stroke: "#e6e5e6",
   font: "#2a1b07",
   highlight: "#345ab3",
-  primaryDark: "#4338ca",
+  primaryDark: "#a996db",
   grayDark: "#374151",
   white: "#ffffff",
-  red: "#cc263a",
   lightBlack: "#222",
+
+  success: "#4CAF50",
+  warning: "#FF9800",
+  error: "#F44336",
+
+  successDark: "#34D399",
+  warningDark: "#FBBF24",
+  errorDark: "#EF4444",
 };

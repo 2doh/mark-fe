@@ -38,7 +38,8 @@ const SearchBarWrap = styled.div`
     margin: 20px;
   }
   &:focus-within {
-    border: 2px solid ${({ theme }) => theme.colors.primary};
+    /* border: 2px solid ${({ theme }) => theme.colors.primary}; */
+    filter: drop-shadow(1px 1px 20px ${({ theme }) => theme.colors.primary});
   }
 `;
 
