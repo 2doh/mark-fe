@@ -7,10 +7,18 @@ import { useFormContext } from "react-hook-form";
 const SearchBar = () => {
   const currentTheme = useTheme();
 
+  const { setValue, watch } = useFormContext();
+  const keywordValue = watch("keyword");
+
   const { handleFocus, handleBlur, placeholder } =
     usePlaceholder("검색어를 입력해 주세요.");
 
   const { register } = useFormContext();
+
+  const handleCancelBtn = () => {
+    setValue("keyword", "");
+    handleBlur();
+  };
 
   return (
     <SearchBarWrap>
@@ -21,6 +29,14 @@ const SearchBar = () => {
         onFocus={() => handleFocus()}
         onBlur={() => handleBlur()}
       />
+      {keywordValue && (
+        <img
+          src={currentTheme.icons.x}
+          alt="취소 아이콘"
+          onClick={() => handleCancelBtn()}
+          style={{ cursor: "pointer" }}
+        />
+      )}
     </SearchBarWrap>
   );
 };

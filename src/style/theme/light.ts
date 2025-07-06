@@ -7,6 +7,7 @@ import search from "../../assets/icons/light/search.svg";
 import star from "../../assets/icons/light/star.svg";
 import sun from "../../assets/icons/light/sun.svg";
 import x from "../../assets/icons/light/x.svg";
+import brightStar from "../../assets/icons/light/material-symbols--star-rounded.svg";
 
 export const lightTheme = {
   mode: "light",
@@ -25,5 +26,6 @@ export const lightTheme = {
     star: star,
     sun: sun,
     x: x,
+    brightStar: brightStar,
   },
 };

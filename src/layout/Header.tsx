@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled, { keyframes, useTheme } from "styled-components";
 import ThemeBtn from "../components/button/ThemeBtn";
 import { flexCenter } from "../style/mixin";
@@ -9,6 +9,7 @@ const Header = () => {
   const imgObj = [currentTheme.icons.star];
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 500);
+  const navi = useNavigate();
 
   const handleMenuOpen = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -19,6 +20,12 @@ const Header = () => {
     if (isMenuOpen === false) {
       setIsMenuOpen(true);
       return;
+    }
+  };
+
+  const handleBtnClick = (data: string) => {
+    if (data === currentTheme.icons.star) {
+      navi("/bookmark");
     }
   };
 
@@ -38,7 +45,12 @@ const Header = () => {
           <BtnWrap>
             <ThemeBtn />
             {imgObj.map(data => (
-              <BtnStyle key={data}>
+              <BtnStyle
+                key={data}
+                onClick={() => {
+                  handleBtnClick(data);
+                }}
+              >
                 <img src={data} />
               </BtnStyle>
             ))}

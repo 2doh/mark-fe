@@ -9,6 +9,7 @@ import SearchBar from "../components/SearchBar";
 import { TradeMark } from "../interface/tradeMarkInterface";
 import { normalizeFunc } from "../utils/normalize";
 import TradeMarkCard from "../components/TradeMarkCard";
+import LoadingSpinner from "../components/common/Spinner";
 
 const schema = z.object({
   keyword: z.string().optional(),
@@ -18,6 +19,7 @@ export type searchForm = z.infer<typeof schema>;
 const Home = () => {
   const [products, setProducts] = useState<TradeMark[]>([]); // 전체 상품 리스트
   const [results, setResults] = useState<TradeMark[]>([]); // 검색 결과
+  const [isLoading, setIsLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const keywordParam = searchParams.get("q") ?? "";
@@ -47,14 +49,13 @@ const Home = () => {
     [listRender.length],
   );
 
-  console.log(listRender.length);
-
   const formMethod = useForm<searchForm>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
   });
 
   const onSubmit = async ({ keyword }: searchForm) => {
+    setIsLoading(true);
     const kw = normalizeFunc(keyword);
 
     setSearchParams({ q: kw });
@@ -66,15 +67,20 @@ const Home = () => {
     });
 
     setResults(filtered);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setIsLoading(false);
   };
 
   useEffect(() => {
     const productList = async () => {
+      setIsLoading(true);
       const result = await searchKeyword();
       if (result?.status !== 200) {
         return;
       }
       setProducts(result?.data);
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setIsLoading(false);
     };
     productList();
   }, []);
@@ -89,33 +95,35 @@ const Home = () => {
     }
     formMethod.setValue("keyword", keywordParam);
     onSubmit({ keyword: keywordParam });
-
-    console.log(results);
-    console.log(products);
   }, [keywordParam, products]);
 
   return (
     <HomeWrap>
       <FormProvider {...formMethod}>
         <HomeTop>
-          <form onSubmit={formMethod.handleSubmit(onSubmit)}>
+          <form onSubmit={formMethod.handleSubmit(onSubmit)} autoComplete="off">
             <SearchBar />
           </form>
         </HomeTop>
-        <HomeBottom>
-          {listRender.slice(0, visibleCount).map((item, idx, arr) => {
-            const isLast = idx === arr.length - 1;
-
-            return (
-              <div
-                key={item.applicationNumber} // 고유키
-                ref={isLast ? lastCardRef : undefined}
-              >
-                <TradeMarkCard item={item} />
-              </div>
-            );
-          })}
-        </HomeBottom>
+        {isLoading ? (
+          <LoadingWrap>
+            <LoadingSpinner />
+          </LoadingWrap>
+        ) : (
+          <HomeBottom>
+            {listRender.slice(0, visibleCount).map((item, idx, arr) => {
+              const isLast = idx === arr.length - 1;
+              return (
+                <div
+                  key={item.applicationNumber}
+                  ref={isLast ? lastCardRef : undefined}
+                >
+                  <TradeMarkCard data={item} />
+                </div>
+              );
+            })}
+          </HomeBottom>
+        )}
       </FormProvider>
     </HomeWrap>
   );
@@ -134,4 +142,11 @@ const HomeBottom = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 10px;
   width: 100%;
+`;
+
+const LoadingWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
 `;

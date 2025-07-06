@@ -20,6 +20,7 @@ declare module "styled-components" {
       star: string;
       sun: string;
       x: string;
+      brightStar: string;
     };
   }
 }

@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import Main from "./layout/Main";
+import BookmarkPage from "./pages/BookmarkPage";
 import Home from "./pages/Home";
-
 import { useThemeStore } from "./store/useThemeStore";
 import Globalstyle from "./style/Globalstyle";
 import { darkTheme } from "./style/theme/dark";
@@ -19,6 +19,8 @@ function App() {
         <Routes>
           <Route element={<Main />}>
             <Route path="/" element={<Home />} />
+            <Route path="/bookmark" element={<BookmarkPage />} />
+            <Route path="*" element={<div>잘못된 경로입니다.</div>} />
           </Route>
         </Routes>
       </BrowserRouter>

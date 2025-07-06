@@ -7,6 +7,7 @@ import search from "../../assets/icons/dark/search.svg";
 import star from "../../assets/icons/dark/star.svg";
 import sun from "../../assets/icons/dark/sun.svg";
 import x from "../../assets/icons/dark/x.svg";
+import brightStar from "../../assets/icons/dark/material-symbols--star-rounded.svg";
 
 export const darkTheme = {
   mode: "dark",
@@ -25,5 +26,6 @@ export const darkTheme = {
     star: star,
     sun: sun,
     x: x,
+    brightStar: brightStar,
   },
 };
