@@ -11,7 +11,7 @@
 
 # 프로젝트 실행 방법
 
-배포 링크 : []()
+배포 링크 : [https://mark-fe.vercel.app/](https://mark-fe.vercel.app/)
 
 # 주요 기능
 
@@ -25,6 +25,7 @@
 
 # 폴더, 컴포넌트 구조
 
+```text
 src
 ├─ apis # REST API 모듈
 ├─ assets # 이미지/아이콘/색상
@@ -39,6 +40,7 @@ src
 ├─ store # Zustand 상태 저장소
 ├─ style # GlobalStyle, 테마
 └─ utils # 유틸
+```
 
 # 기술적 의사 결정
 
