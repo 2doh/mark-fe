@@ -16,6 +16,7 @@ export const darkTheme = {
     text: `${colorsTheme.white}`,
     primary: `${colorsTheme.primaryDark}`,
     hover: `${colorsTheme.stroke}`,
+    warning: `${colorsTheme.warningDark}`,
   },
   icons: {
     moon: moonIcon,

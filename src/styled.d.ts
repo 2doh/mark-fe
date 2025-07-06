@@ -9,6 +9,7 @@ declare module "styled-components" {
       text: string;
       primary: string;
       hover: string;
+      warning: string;
     };
 
     icons: {

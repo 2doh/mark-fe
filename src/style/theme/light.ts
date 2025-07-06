@@ -16,6 +16,7 @@ export const lightTheme = {
     text: `${colorsTheme.font}`,
     primary: `${colorsTheme.primary}`,
     hover: `${colorsTheme.lightBlack}`,
+    warning: `${colorsTheme.warning}`,
   },
   icons: {
     moon: moonIcon,

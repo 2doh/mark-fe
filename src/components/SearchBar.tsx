@@ -1,8 +1,8 @@
+import { useFormContext } from "react-hook-form";
 import styled, { useTheme } from "styled-components";
+import usePlaceholder from "../hooks/usePlaceholder";
 import { colorsTheme } from "../style/colorsTheme";
 import { flexCenter } from "../style/mixin";
-import usePlaceholder from "../hooks/usePlaceholder";
-import { useFormContext } from "react-hook-form";
 
 const SearchBar = () => {
   const currentTheme = useTheme();
@@ -18,6 +18,7 @@ const SearchBar = () => {
   const handleCancelBtn = () => {
     setValue("keyword", "");
     handleBlur();
+    window.location.href = "/";
   };
 
   return (

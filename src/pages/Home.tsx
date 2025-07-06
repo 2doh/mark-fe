@@ -20,6 +20,7 @@ const Home = () => {
   const [products, setProducts] = useState<TradeMark[]>([]); // 전체 상품 리스트
   const [results, setResults] = useState<TradeMark[]>([]); // 검색 결과
   const [isLoading, setIsLoading] = useState(false);
+  const [emptyFiltered, setEmptyFiltered] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const keywordParam = searchParams.get("q") ?? "";
@@ -65,7 +66,13 @@ const Home = () => {
       const en = normalizeFunc(item.productNameEng).includes(kw);
       return ko || en;
     });
-
+    // console.log(ko);
+    if (!filtered.length) {
+      setEmptyFiltered(true);
+    }
+    if (filtered.length) {
+      setEmptyFiltered(false);
+    }
     setResults(filtered);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsLoading(false);
@@ -109,6 +116,8 @@ const Home = () => {
           <LoadingWrap>
             <LoadingSpinner />
           </LoadingWrap>
+        ) : emptyFiltered ? (
+          <EmptyMessage>검색 결과가 없습니다.</EmptyMessage>
         ) : (
           <HomeBottom>
             {listRender.slice(0, visibleCount).map((item, idx, arr) => {
@@ -149,4 +158,11 @@ const LoadingWrap = styled.div`
   justify-content: center;
   align-items: center;
   padding: 40px 0;
+`;
+
+const EmptyMessage = styled.p`
+  text-align: center;
+  padding: 40px 0;
+  color: ${({ theme }) => theme.colors.warning};
+  font-size: 1.5rem;
 `;
